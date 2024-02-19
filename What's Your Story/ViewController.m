@@ -6,6 +6,7 @@
 //
 
 #import "ViewController.h"
+#import "GameViewController.h"
 
 @interface ViewController ()
 
@@ -15,8 +16,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    UIButtonConfiguration *configuration = [UIButtonConfiguration plainButtonConfiguration];
+    configuration.title = @"Start";
+    configuration.contentInsets = NSDirectionalEdgeInsetsMake(10, 20, 10, 20);
+
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.backgroundColor = [UIColor redColor];
+    [button setConfiguration:configuration];
+    [button addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview: button];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:@[
+        [button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [button.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:self.view.bounds.size.height * 0.3]
+    ]];
 }
 
+- (void)startGame {
+    [self.navigationController pushViewController:[GameViewController new] animated:YES];
+}
 
 @end
