@@ -6,12 +6,8 @@
 //
 
 #import "GameViewController.h"
-
-@implementation GameViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    NSArray *level5Stories = [NSSet setWithObjects: // makes you look bad
+static NSArray *STORIES = @[
+    @[// makes you look bad
         @"something unfair that happened to you",
         @"an unpleasant chore that has been your responsibility",
         @"being sick",
@@ -23,9 +19,8 @@
         @"a time you felt like nothing was going your way",
         @"a time you felt lucky",
         @"a time you were wrong",
-        nil
-    ];
-    NSArray *level4Stories = [NSSet setWithObjects: // boring
+    ],
+    @[ // boring
         @"a word or phrase you use all the time",
         @"a trend you once tried",
         @"a historical event you've lived through",
@@ -43,9 +38,8 @@
         @"what your ate for lunch at school",
         @"severe weather you've experienced",
         @"a work of art you love",
-        nil
-    ];
-    NSArray *level3Stories = [NSSet setWithObjects: // too corporate
+    ],
+    @[// too corporate
         @"winning",
         @"losing",
         @"being in charge",
@@ -63,18 +57,16 @@
         @"a cause you believe in",
         @"an achievement",
         @"learning something from a disappointment",
-        nil
-    ];
-    NSArray *level2Stories = [NSSet setWithObjects: // friend
+    ],
+    @[// friend
         @"trying something new",
         @"learning something new",
         @"a secret",
         @"a routine or ritual you enjoy",
         @"your first crush",
         @"falling in love",
-        nil
-    ];
-    NSArray *level1Stories = [NSSet setWithObjects: // girl
+    ],
+    @[// relationship
         @"getting lost",
         @"one of your biggest pet peeves",
         @"a favourite scent or smell",
@@ -108,9 +100,8 @@
         @"where you grew up",
         @"something you won't eat",
         @"changing your mind",
-        nil
-    ];
-    NSArray *level0Stories = [NSSet setWithObjects: // first date
+    ],
+    @[// first date
         @"an adventure you've been on",
         @"an unusual food you've tried",
         @"a famous place you've been to",
@@ -166,8 +157,74 @@
         @"first day of school",
         @"reading a favourite book for the first time",
         @"mustering up the courage to do something hard",
-        nil
-    ];
+    ],
+];
+
+@interface GameViewController ()
+@property NSArray<NSNumber *> *categories;
+@property NSMutableArray<NSString *> *stories;
+@property NSUInteger index;
+@property UILabel *story;
+@end
+
+@implementation GameViewController
+
++ (id) gameViewController:(NSArray<NSNumber *> *)categories {
+    GameViewController *gameViewController = [self new];
+    gameViewController.categories = categories;
+    gameViewController.stories = [NSMutableArray new];
+    gameViewController.index = 0;
+    return gameViewController;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    for (uint8_t i = 0; i < self.categories.count; ++i) {
+        if ([self.categories[i] boolValue]) {
+            [self.stories addObjectsFromArray:STORIES[i]];
+        }
+    }
+    for (uint8_t i = self.stories.count; i > 1; --i) {
+        [self.stories exchangeObjectAtIndex:i - 1 withObjectAtIndex:arc4random_uniform(i)];
+    }
+
+    UIButtonConfiguration *configuration = [UIButtonConfiguration plainButtonConfiguration];
+    configuration.title = @"Next";
+    configuration.contentInsets = NSDirectionalEdgeInsetsMake(10, 20, 10, 20);
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.backgroundColor = [UIColor redColor];
+    [button setConfiguration:configuration];
+    [button addTarget:self action:@selector(nextStory) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview: button];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:@[
+        [button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [button.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:self.view.bounds.size.height * 0.35],
+    ]];
+
+    self.story = [UILabel new];
+    self.story.text = self.stories[self.index++];
+    self.story.numberOfLines = 0;
+    self.story.lineBreakMode = NSLineBreakByWordWrapping;
+    self.story.textColor = UIColor.whiteColor;
+    self.story.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.story];
+    self.story.translatesAutoresizingMaskIntoConstraints = NO;
+    CGFloat sideMargin = self.view.bounds.size.width * 0.15;
+    [NSLayoutConstraint activateConstraints:@[
+        [self.story.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.story.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+        [self.story.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:sideMargin],
+        [self.story.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.view.trailingAnchor constant:-sideMargin],
+    ]];
+}
+
+- (void)nextStory {
+    if (self.index < self.stories.count) {
+        self.story.text = self.stories[self.index++];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end
