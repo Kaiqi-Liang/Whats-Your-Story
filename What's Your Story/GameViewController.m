@@ -6,6 +6,7 @@
 //
 
 #import "GameViewController.h"
+#import "MainButton.h"
 
 @interface GameViewController ()
 @property NSArray<NSNumber *> *categories;
@@ -35,18 +36,19 @@
         [self.stories exchangeObjectAtIndex:i - 1 withObjectAtIndex:arc4random_uniform(i)];
     }
 
-    UIButtonConfiguration *configuration = [UIButtonConfiguration plainButtonConfiguration];
-    configuration.title = @"Next";
-    configuration.contentInsets = NSDirectionalEdgeInsetsMake(10, 20, 10, 20);
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.backgroundColor = [UIColor redColor];
-    [button setConfiguration:configuration];
-    [button addTarget:self action:@selector(nextStory) forControlEvents:UIControlEventTouchUpInside];
+    MainButton *button = [[MainButton alloc] initWithTitle:@"Next"];
     [self.view addSubview: button];
-    button.translatesAutoresizingMaskIntoConstraints = NO;
+    [button addTarget:self action:@selector(nextStory) forControlEvents:UIControlEventTouchUpInside];
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:button
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0
+                                                                         constant:-(self.view.frame.size.height * 0.1)];
     [NSLayoutConstraint activateConstraints:@[
         [button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [button.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:self.view.bounds.size.height * 0.35],
+        bottomConstraint,
     ]];
 
     self.story = [UILabel new];
@@ -70,7 +72,11 @@
     if (self.index < self.stories.count) {
         self.story.text = self.stories[self.index++];
     } else {
-        [self.navigationController popViewControllerAnimated:YES];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You have done all the questions" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Go Back" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 

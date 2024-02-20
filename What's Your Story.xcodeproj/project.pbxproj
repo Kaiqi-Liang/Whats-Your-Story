@@ -15,6 +15,7 @@
 		2B372DB32B7CD4D900D37CA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B372DB12B7CD4D900D37CA2 /* LaunchScreen.storyboard */; };
 		2B372DB62B7CD4D900D37CA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B372DB52B7CD4D900D37CA2 /* main.m */; };
 		2BE6AC502B82F6B700A84C54 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE6AC4F2B82F6B700A84C54 /* GameViewController.m */; };
+		2BE6AC542B841B7D00A84C54 /* MainButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE6AC532B841B7D00A84C54 /* MainButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		2B372DB52B7CD4D900D37CA2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2BE6AC4F2B82F6B700A84C54 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		2BE6AC512B82F70100A84C54 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		2BE6AC522B841B7D00A84C54 /* MainButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainButton.h; sourceTree = "<group>"; };
+		2BE6AC532B841B7D00A84C54 /* MainButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +69,8 @@
 			children = (
 				2B372DA32B7CD4D700D37CA2 /* AppDelegate.h */,
 				2BE6AC4F2B82F6B700A84C54 /* GameViewController.m */,
+				2BE6AC522B841B7D00A84C54 /* MainButton.h */,
+				2BE6AC532B841B7D00A84C54 /* MainButton.m */,
 				2BE6AC512B82F70100A84C54 /* GameViewController.h */,
 				2B372DA42B7CD4D700D37CA2 /* AppDelegate.m */,
 				2B372DA62B7CD4D700D37CA2 /* SceneDelegate.h */,
@@ -155,6 +160,7 @@
 				2B372DAB2B7CD4D700D37CA2 /* ViewController.m in Sources */,
 				2B372DA52B7CD4D700D37CA2 /* AppDelegate.m in Sources */,
 				2B372DB62B7CD4D900D37CA2 /* main.m in Sources */,
+				2BE6AC542B841B7D00A84C54 /* MainButton.m in Sources */,
 				2B372DA82B7CD4D700D37CA2 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

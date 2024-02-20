@@ -13,7 +13,7 @@
 
 @end
 
-static NSArray *STORIES = @[
+static NSArray<NSArray<NSString *> *> *STORIES = @[
     @[// makes you look bad
         @"something unfair that happened to you",
         @"an unpleasant chore that has been your responsibility",

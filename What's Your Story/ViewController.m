@@ -7,13 +7,56 @@
 
 #import "ViewController.h"
 #import "GameViewController.h"
+#import "MainButton.h"
 #define NUM_OF_STORIES 6
 
 @interface ViewController ()
+
 @property NSMutableArray<NSNumber *> *categories;
+@property MainButton *button;
+@property NSMutableArray<UIButton *> *checkboxes;
+
 @end
 
 @implementation ViewController
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return image;
+}
+
+- (void)setupConstraintsWithSize:(CGSize)size {
+    // TODO: this does not work
+    NSLog(@"%f", -(size.height * 0.1));
+    [self.button addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.button
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0
+                                                                         constant:-(size.height * 0.1)];
+    [NSLayoutConstraint activateConstraints:@[
+        [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        bottomConstraint,
+    ]];
+
+    for (uint8_t i = 0; i < NUM_OF_STORIES; ++i) {
+        [NSLayoutConstraint activateConstraints:@[
+            [self.checkboxes[i].centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+            [self.checkboxes[i].centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:size.height * (i - 3) / 10],
+        ]];
+        NSLog(@"%f", size.height * (i - 3) / 10);
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,34 +65,25 @@
         [self.categories addObject:@NO];
     }
 
-    UIButtonConfiguration *configuration = [UIButtonConfiguration plainButtonConfiguration];
-    configuration.title = @"Start";
-    configuration.contentInsets = NSDirectionalEdgeInsetsMake(10, 20, 10, 20);
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.backgroundColor = [UIColor redColor];
-    [button setConfiguration:configuration];
-    [button addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview: button];
-    button.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints:@[
-        [button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [button.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:self.view.bounds.size.height * 0.35],
-    ]];
+    self.button = [[MainButton alloc] initWithTitle:@"Start"];
+    [self.view addSubview: self.button];
 
+    self.checkboxes = [NSMutableArray arrayWithCapacity:NUM_OF_STORIES];
     for (uint8_t i = 0; i < NUM_OF_STORIES; ++i) {
-        // TODO: add labels on top of the checkboxes
         UIButton *checkboxButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [checkboxButton setTitle:@"\u2B1C" forState:UIControlStateNormal]; // Empty box unicode
-        [checkboxButton setTitle:@"\u2705" forState:UIControlStateSelected]; // Checkmark unicode
+        [checkboxButton setTitle:[NSString stringWithFormat:@"Category %d", i] forState:UIControlStateNormal];
+        [checkboxButton setBackgroundImage:[self imageWithColor:UIColor.tintColor] forState:UIControlStateSelected];
         [checkboxButton addTarget:self action:@selector(checkboxButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [checkboxButton setTag:i];
         [self.view addSubview:checkboxButton];
         checkboxButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [NSLayoutConstraint activateConstraints:@[
-            [checkboxButton.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-            [checkboxButton.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:self.view.bounds.size.height * (i - 3) / 10],
-        ]];
+        self.checkboxes[i] = checkboxButton;
     }
+    [self setupConstraintsWithSize:self.view.bounds.size];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [self setupConstraintsWithSize:size];
 }
 
 - (void)checkboxButtonTapped:(UIButton *)sender {
@@ -61,7 +95,9 @@
     if ([self.categories containsObject:@YES]) {
         [self.navigationController pushViewController:[GameViewController gameViewController:self.categories] animated:YES];
     } else {
-        // TODO: tell the user they need to select at least one category
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You need to select at least one categories" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Sure" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
