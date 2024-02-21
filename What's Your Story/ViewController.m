@@ -8,12 +8,14 @@
 #import "ViewController.h"
 #import "GameViewController.h"
 #import "MainButton.h"
+#import "MainLabel.h"
 #define NUM_OF_STORIES 6
 
 @interface ViewController ()
 
 @property NSMutableArray<NSNumber *> *categories;
 @property MainButton *button;
+@property MainLabel *label;
 @property NSMutableArray<UIButton *> *checkboxes;
 
 @end
@@ -36,7 +38,13 @@
 - (void)setupConstraintsWithSize:(CGSize)size {
     // TODO: this does not work
     NSLog(@"%f", -(size.height * 0.1));
-    [self.button addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.label
+                                                                        attribute:NSLayoutAttributeTop
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeTop
+                                                                       multiplier:1.0
+                                                                         constant:size.height * 0.1];
     NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.button
                                                                         attribute:NSLayoutAttributeBottom
                                                                         relatedBy:NSLayoutRelationEqual
@@ -45,6 +53,8 @@
                                                                        multiplier:1.0
                                                                          constant:-(size.height * 0.1)];
     [NSLayoutConstraint activateConstraints:@[
+        [self.label.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        topConstraint,
         [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         bottomConstraint,
     ]];
@@ -65,13 +75,17 @@
         [self.categories addObject:@NO];
     }
 
+    self.label = [[MainLabel alloc] initWithText:@"Pick one or more categories of stories to tell"];
+    [self.view addSubview:self.label];
+
     self.button = [[MainButton alloc] initWithTitle:@"Start"];
-    [self.view addSubview: self.button];
+    [self.button addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.button];
 
     self.checkboxes = [NSMutableArray arrayWithCapacity:NUM_OF_STORIES];
     for (uint8_t i = 0; i < NUM_OF_STORIES; ++i) {
         UIButton *checkboxButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [checkboxButton setTitle:[NSString stringWithFormat:@"Category %d", i] forState:UIControlStateNormal];
+        [checkboxButton setTitle:[NSString stringWithFormat:@"Category %d", i + 1] forState:UIControlStateNormal];
         [checkboxButton setBackgroundImage:[self imageWithColor:UIColor.tintColor] forState:UIControlStateSelected];
         [checkboxButton addTarget:self action:@selector(checkboxButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [checkboxButton setTag:i];

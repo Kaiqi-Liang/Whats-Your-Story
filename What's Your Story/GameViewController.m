@@ -7,6 +7,7 @@
 
 #import "GameViewController.h"
 #import "MainButton.h"
+#import "MainLabel.h"
 
 @interface GameViewController ()
 
@@ -40,19 +41,8 @@
     }
 
     self.button = [[MainButton alloc] initWithTitle:@"Next"];
-    [self.view addSubview: self.button];
     [self.button addTarget:self action:@selector(nextStory) forControlEvents:UIControlEventTouchUpInside];
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.button
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:self.view
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                       multiplier:1.0
-                                                                         constant:-(self.view.frame.size.height * 0.1)];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        bottomConstraint,
-    ]];
+    [self.view addSubview: self.button];
 
     self.story = [UILabel new];
     self.story.text = self.stories[self.index++];
@@ -62,12 +52,27 @@
     self.story.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.story];
     self.story.translatesAutoresizingMaskIntoConstraints = NO;
+
+    MainLabel *label = [[MainLabel alloc] initWithText:@"TELL A STORY ABOUT"];
+    [self.view addSubview:label];
+
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.button
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0
+                                                                         constant:-(self.view.frame.size.height * 0.1)];
     CGFloat sideMargin = self.view.bounds.size.width * 0.15;
     [NSLayoutConstraint activateConstraints:@[
+        [label.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [label.centerYAnchor constraintEqualToAnchor:self.story.centerYAnchor constant:-self.view.frame.size.height * 0.1],
         [self.story.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         [self.story.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
         [self.story.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:sideMargin],
         [self.story.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.view.trailingAnchor constant:-sideMargin],
+        [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        bottomConstraint,
     ]];
 }
 
@@ -75,7 +80,7 @@
     if (self.index < self.stories.count) {
         self.story.text = self.stories[self.index++];
     } else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No more questions in the selected categories" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No more stories in the selected categories" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIPopoverPresentationController *presentationController = [alert popoverPresentationController];
         presentationController.sourceView = self.button;
         [alert addAction:[UIAlertAction actionWithTitle:@"Go Back" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
