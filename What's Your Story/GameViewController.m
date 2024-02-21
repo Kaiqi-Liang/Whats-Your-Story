@@ -46,9 +46,9 @@
 
     self.story = [UILabel new];
     self.story.text = self.stories[self.index++];
+    self.story.textColor = UIColor.whiteColor;
     self.story.numberOfLines = 0;
     self.story.lineBreakMode = NSLineBreakByWordWrapping;
-    self.story.textColor = UIColor.whiteColor;
     self.story.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.story];
     self.story.translatesAutoresizingMaskIntoConstraints = NO;

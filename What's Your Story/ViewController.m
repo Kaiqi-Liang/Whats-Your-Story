@@ -52,9 +52,12 @@
                                                                         attribute:NSLayoutAttributeBottom
                                                                        multiplier:1.0
                                                                          constant:-(size.height * 0.1)];
+    CGFloat sideMargin = self.view.bounds.size.width * 0.15;
     [NSLayoutConstraint activateConstraints:@[
         [self.label.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         topConstraint,
+        [self.label.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:sideMargin],
+        [self.label.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.view.trailingAnchor constant:-sideMargin],
         [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         bottomConstraint,
     ]];
@@ -62,9 +65,9 @@
     for (uint8_t i = 0; i < NUM_OF_STORIES; ++i) {
         [NSLayoutConstraint activateConstraints:@[
             [self.checkboxes[i].centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-            [self.checkboxes[i].centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:size.height * (i - 3) / 10],
+            [self.checkboxes[i].centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:size.height * (i - 2.5) / 10],
         ]];
-        NSLog(@"%f", size.height * (i - 3) / 10);
+        NSLog(@"%f", size.height * (i - 2.5) / 10);
     }
 }
 
