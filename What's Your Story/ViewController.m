@@ -96,7 +96,9 @@
         [self.navigationController pushViewController:[GameViewController gameViewController:self.categories] animated:YES];
     } else {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You need to select at least one categories" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert addAction:[UIAlertAction actionWithTitle:@"Sure" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}]];
+        UIPopoverPresentationController *presentationController = [alert popoverPresentationController];
+        presentationController.sourceView = self.button;
         [self presentViewController:alert animated:YES completion:nil];
     }
 }

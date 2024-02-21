@@ -9,10 +9,13 @@
 #import "MainButton.h"
 
 @interface GameViewController ()
+
 @property NSArray<NSNumber *> *categories;
 @property NSMutableArray<NSString *> *stories;
 @property NSUInteger index;
 @property UILabel *story;
+@property MainButton *button;
+
 @end
 
 @implementation GameViewController
@@ -36,10 +39,10 @@
         [self.stories exchangeObjectAtIndex:i - 1 withObjectAtIndex:arc4random_uniform(i)];
     }
 
-    MainButton *button = [[MainButton alloc] initWithTitle:@"Next"];
-    [self.view addSubview: button];
-    [button addTarget:self action:@selector(nextStory) forControlEvents:UIControlEventTouchUpInside];
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:button
+    self.button = [[MainButton alloc] initWithTitle:@"Next"];
+    [self.view addSubview: self.button];
+    [self.button addTarget:self action:@selector(nextStory) forControlEvents:UIControlEventTouchUpInside];
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.button
                                                                         attribute:NSLayoutAttributeBottom
                                                                         relatedBy:NSLayoutRelationEqual
                                                                            toItem:self.view
@@ -47,7 +50,7 @@
                                                                        multiplier:1.0
                                                                          constant:-(self.view.frame.size.height * 0.1)];
     [NSLayoutConstraint activateConstraints:@[
-        [button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         bottomConstraint,
     ]];
 
@@ -72,7 +75,9 @@
     if (self.index < self.stories.count) {
         self.story.text = self.stories[self.index++];
     } else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You have done all the questions" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No more questions in the selected categories" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIPopoverPresentationController *presentationController = [alert popoverPresentationController];
+        presentationController.sourceView = self.button;
         [alert addAction:[UIAlertAction actionWithTitle:@"Go Back" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self.navigationController popViewControllerAnimated:YES];
         }]];
