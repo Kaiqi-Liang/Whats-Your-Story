@@ -31,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = UIColor.blackColor;
     for (uint8_t i = 0; i < self.categories.count; ++i) {
         if ([self.categories[i] boolValue]) {
             [self.stories addObjectsFromArray:STORIES[i]];

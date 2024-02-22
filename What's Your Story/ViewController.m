@@ -37,7 +37,6 @@
 }
 
 - (void)setupConstraintsWithSize:(CGSize)size {
-    // TODO: this does not work
     [NSLayoutConstraint deactivateConstraints:self.constraints];
     [self.constraints removeAllObjects];
     NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.label
@@ -74,7 +73,9 @@
 }
 
 - (void)viewDidLoad {
+    // TODO: add animation
     [super viewDidLoad];
+    self.view.backgroundColor = UIColor.blackColor;
     self.constraints = [NSMutableArray new];
     self.categories = [NSMutableArray arrayWithCapacity:NUM_OF_STORIES];
     for (uint8_t i = 0; i < NUM_OF_STORIES; ++i) {
@@ -88,6 +89,7 @@
     [self.button addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.button];
 
+    // TODO: put them in a collection view
     self.checkboxes = [NSMutableArray arrayWithCapacity:NUM_OF_STORIES];
     for (uint8_t i = 0; i < NUM_OF_STORIES; ++i) {
         UIButton *checkboxButton = [UIButton buttonWithType:UIButtonTypeCustom];
