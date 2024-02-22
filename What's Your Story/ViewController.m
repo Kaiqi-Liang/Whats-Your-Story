@@ -17,6 +17,7 @@
 @property MainButton *button;
 @property MainLabel *label;
 @property NSMutableArray<UIButton *> *checkboxes;
+@property NSMutableArray<NSLayoutConstraint *> *constraints;
 
 @end
 
@@ -37,7 +38,8 @@
 
 - (void)setupConstraintsWithSize:(CGSize)size {
     // TODO: this does not work
-    NSLog(@"%f", -(size.height * 0.1));
+    [NSLayoutConstraint deactivateConstraints:self.constraints];
+    [self.constraints removeAllObjects];
     NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.label
                                                                         attribute:NSLayoutAttributeTop
                                                                         relatedBy:NSLayoutRelationEqual
@@ -52,8 +54,8 @@
                                                                         attribute:NSLayoutAttributeBottom
                                                                        multiplier:1.0
                                                                          constant:-(size.height * 0.1)];
-    CGFloat sideMargin = self.view.bounds.size.width * 0.15;
-    [NSLayoutConstraint activateConstraints:@[
+    CGFloat sideMargin = size.width * 0.15;
+    [self.constraints addObjectsFromArray:@[
         [self.label.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         topConstraint,
         [self.label.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:sideMargin],
@@ -63,16 +65,17 @@
     ]];
 
     for (uint8_t i = 0; i < NUM_OF_STORIES; ++i) {
-        [NSLayoutConstraint activateConstraints:@[
+        [self.constraints addObjectsFromArray:@[
             [self.checkboxes[i].centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
             [self.checkboxes[i].centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:size.height * (i - 2.5) / 10],
         ]];
-        NSLog(@"%f", size.height * (i - 2.5) / 10);
     }
+    [NSLayoutConstraint activateConstraints:self.constraints];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.constraints = [NSMutableArray new];
     self.categories = [NSMutableArray arrayWithCapacity:NUM_OF_STORIES];
     for (uint8_t i = 0; i < NUM_OF_STORIES; ++i) {
         [self.categories addObject:@NO];
@@ -100,6 +103,7 @@
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [self setupConstraintsWithSize:size];
 }
 
