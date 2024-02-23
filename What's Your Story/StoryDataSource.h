@@ -1,10 +1,3 @@
-//
-//  StoryDataSource.h
-//  What's Your Story
-//
-//  Created by ByteDance on 2/23/24.
-//
-
 #import <Foundation/Foundation.h>
 
 static NSArray<NSArray<NSString *> *> *STORIES = @[

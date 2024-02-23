@@ -1,10 +1,3 @@
-//
-//  GameViewController.m
-//  What's Your Story
-//
-//  Created by ByteDance on 2/19/24.
-//
-
 #import "GameViewController.h"
 #import "StoryDataSource.h"
 #import "MainButton.h"

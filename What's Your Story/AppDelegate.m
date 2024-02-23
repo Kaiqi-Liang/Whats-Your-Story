@@ -1,10 +1,3 @@
-//
-//  AppDelegate.m
-//  What's Your Story
-//
-//  Created by ByteDance on 2/14/24.
-//
-
 #import "AppDelegate.h"
 
 @interface AppDelegate ()

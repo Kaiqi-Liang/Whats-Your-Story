@@ -1,10 +1,3 @@
-//
-//  MainButton.m
-//  What's Your Story
-//
-//  Created by ByteDance on 2/20/24.
-//
-
 #import "MainButton.h"
 
 @implementation MainButton

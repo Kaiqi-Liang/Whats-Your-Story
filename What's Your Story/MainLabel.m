@@ -1,10 +1,3 @@
-//
-//  MainLabel.m
-//  What's Your Story
-//
-//  Created by ByteDance on 2/21/24.
-//
-
 #import "MainLabel.h"
 
 @implementation MainLabel

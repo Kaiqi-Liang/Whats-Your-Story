@@ -1,10 +1,3 @@
-//
-//  TableViewController.m
-//  What's Your Story
-//
-//  Created by ByteDance on 2/23/24.
-//
-
 #import "TableViewController.h"
 #import "StoryDataSource.h"
 

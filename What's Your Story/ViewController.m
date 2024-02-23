@@ -1,10 +1,3 @@
-//
-//  ViewController.m
-//  What's Your Story
-//
-//  Created by ByteDance on 2/14/24.
-//
-
 #import "ViewController.h"
 #import "GameViewController.h"
 #import "TableViewController.h"
@@ -97,7 +90,7 @@
     self.help = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.help setTitle:@"?" forState:UIControlStateNormal];
     self.help.titleLabel.font = [UIFont boldSystemFontOfSize:24];
-    self.help.backgroundColor = [UIColor redColor];
+    self.help.backgroundColor = UIColor.redColor;
     [self.help setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.help addTarget:self action:@selector(goToHelpPage) forControlEvents:UIControlEventTouchUpInside];
     self.help.translatesAutoresizingMaskIntoConstraints = NO;
@@ -109,10 +102,6 @@
 - (void )viewDidLayoutSubviews {
     self.help.layer.cornerRadius = self.help.frame.size.width / 2;
     self.help.clipsToBounds = YES;
-}
-
-- (void)goToHelpPage {
-    [self.navigationController pushViewController:[TableViewController new] animated:YES];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -135,6 +124,10 @@
         presentationController.sourceView = self.button;
         [self presentViewController:alert animated:YES completion:nil];
     }
+}
+
+- (void)goToHelpPage {
+    [self.navigationController pushViewController:[TableViewController new] animated:YES];
 }
 
 @end
