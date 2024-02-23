@@ -6,6 +6,7 @@
 //
 
 #import "GameViewController.h"
+#import "StoryDataSource.h"
 #import "MainButton.h"
 #import "MainLabel.h"
 
@@ -57,13 +58,6 @@
     MainLabel *label = [[MainLabel alloc] initWithText:@"TELL A STORY ABOUT"];
     [self.view addSubview:label];
 
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.button
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:self.view
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                       multiplier:1.0
-                                                                         constant:-(self.view.frame.size.height * 0.1)];
     CGFloat sideMargin = self.view.bounds.size.width * 0.15;
     [NSLayoutConstraint activateConstraints:@[
         [label.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
@@ -73,7 +67,7 @@
         [self.story.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:sideMargin],
         [self.story.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.view.trailingAnchor constant:-sideMargin],
         [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        bottomConstraint,
+        [self.button.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-(self.view.bounds.size.height * 0.05)],
     ]];
 }
 
