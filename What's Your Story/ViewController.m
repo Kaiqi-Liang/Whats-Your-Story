@@ -51,7 +51,7 @@
     for (uint8_t i = 0; i < NUM_OF_STORIES; ++i) {
         [self.constraints addObjectsFromArray:@[
             [self.checkboxes[i].centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-            [self.checkboxes[i].centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:size.height * (i - 2.5) / 10],
+            [self.checkboxes[i].centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:size.height * (i - 2.5) / 15],
         ]];
     }
     [NSLayoutConstraint activateConstraints:self.constraints];
@@ -87,11 +87,15 @@
         self.checkboxes[i] = checkboxButton;
     }
 
-    self.help = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.help setTitle:@"?" forState:UIControlStateNormal];
-    self.help.titleLabel.font = [UIFont boldSystemFontOfSize:24];
+    self.help = [UIButton new];
+    UIButtonConfiguration *configuration = [UIButtonConfiguration plainButtonConfiguration];
+    [configuration setAttributedTitle: [[NSMutableAttributedString alloc] initWithString:@"?"
+                                                                              attributes:@{
+        NSFontAttributeName: [UIFont systemFontOfSize:18],
+        NSForegroundColorAttributeName: UIColor.whiteColor,
+    }]];
+    [self.help setConfiguration:configuration];
     self.help.backgroundColor = UIColor.redColor;
-    [self.help setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.help addTarget:self action:@selector(goToHelpPage) forControlEvents:UIControlEventTouchUpInside];
     self.help.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.help];
@@ -127,7 +131,7 @@
 }
 
 - (void)goToHelpPage {
-    [self.navigationController pushViewController:[TableViewController new] animated:YES];
+    [self.navigationController pushViewController:[[TableViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
 }
 
 @end

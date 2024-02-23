@@ -46,9 +46,13 @@
     UILabel *headerLabel = [UILabel new];
     headerLabel.text = [self titleForSection:section];
     headerLabel.textColor = [UIColor whiteColor];
-    headerLabel.backgroundColor = [UIColor blackColor];
+    headerLabel.backgroundColor = UIColor.blackColor;
     headerLabel.textAlignment = NSTextAlignmentCenter;
     return headerLabel;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -56,7 +60,7 @@
 }
 
 - (NSString *)titleForSection:(NSInteger)section {
-    return [NSString stringWithFormat:@"Category %ld", section];
+    return [NSString stringWithFormat:@"Category %ld", section + 1];
 }
 
 @end
