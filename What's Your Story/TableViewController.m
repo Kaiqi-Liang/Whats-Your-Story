@@ -12,7 +12,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.stories = STORIES;
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:@"Cell"];
     self.view.backgroundColor = UIColor.blackColor;
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];

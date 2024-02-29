@@ -15,6 +15,7 @@
 		2B372DB32B7CD4D900D37CA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B372DB12B7CD4D900D37CA2 /* LaunchScreen.storyboard */; };
 		2B372DB62B7CD4D900D37CA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B372DB52B7CD4D900D37CA2 /* main.m */; };
 		2B92E1BC2B88193C00028E43 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B92E1BB2B88193C00028E43 /* TableViewController.m */; };
+		2B92E1C32B8D4F4700028E43 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B92E1C22B8D4F4700028E43 /* CollectionViewController.m */; };
 		2BE6AC502B82F6B700A84C54 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE6AC4F2B82F6B700A84C54 /* GameViewController.m */; };
 		2BE6AC542B841B7D00A84C54 /* MainButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE6AC532B841B7D00A84C54 /* MainButton.m */; };
 		2BE6AC572B85D15100A84C54 /* MainLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE6AC562B85D15100A84C54 /* MainLabel.m */; };
@@ -36,6 +37,8 @@
 		2B92E1BA2B88193C00028E43 /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		2B92E1BB2B88193C00028E43 /* TableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		2B92E1BD2B881A9A00028E43 /* StoryDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoryDataSource.h; sourceTree = "<group>"; };
+		2B92E1C12B8D4F4700028E43 /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		2B92E1C22B8D4F4700028E43 /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		2BE6AC4F2B82F6B700A84C54 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		2BE6AC512B82F70100A84C54 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		2BE6AC522B841B7D00A84C54 /* MainButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainButton.h; sourceTree = "<group>"; };
@@ -89,6 +92,8 @@
 				2B372DA72B7CD4D700D37CA2 /* SceneDelegate.m */,
 				2B372DA92B7CD4D700D37CA2 /* ViewController.h */,
 				2B372DAA2B7CD4D700D37CA2 /* ViewController.m */,
+				2B92E1C12B8D4F4700028E43 /* CollectionViewController.h */,
+				2B92E1C22B8D4F4700028E43 /* CollectionViewController.m */,
 				2B372DAC2B7CD4D700D37CA2 /* Main.storyboard */,
 				2B372DAF2B7CD4D900D37CA2 /* Assets.xcassets */,
 				2B372DB12B7CD4D900D37CA2 /* LaunchScreen.storyboard */,
@@ -175,6 +180,7 @@
 				2B92E1BC2B88193C00028E43 /* TableViewController.m in Sources */,
 				2B372DB62B7CD4D900D37CA2 /* main.m in Sources */,
 				2BE6AC542B841B7D00A84C54 /* MainButton.m in Sources */,
+				2B92E1C32B8D4F4700028E43 /* CollectionViewController.m in Sources */,
 				2B372DA82B7CD4D700D37CA2 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
