@@ -4,7 +4,7 @@
 
 @interface TableViewController ()
 
-@property NSArray<NSArray<NSString *> *> *stories;
+@property (nonatomic, copy) NSArray<NSArray<NSString *> *> *stories;
 
 @end
 

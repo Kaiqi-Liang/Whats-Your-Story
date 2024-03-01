@@ -9,7 +9,7 @@
 
 @interface CollectionViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource>
 
-@property (nonatomic, weak) id <MainViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<MainViewControllerDelegate> delegate;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
 @end

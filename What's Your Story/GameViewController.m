@@ -5,11 +5,11 @@
 
 @interface GameViewController ()
 
-@property NSArray<NSNumber *> *categories;
-@property NSMutableArray<NSString *> *stories;
-@property NSUInteger index;
-@property UILabel *story;
-@property MainButton *button;
+@property (nonatomic, copy) NSArray<NSNumber *> *categories;
+@property (nonatomic, strong) NSMutableArray<NSString *> *stories;
+@property (nonatomic, assign) NSUInteger index;
+@property (nonatomic, strong) UILabel *story;
+@property (nonatomic, strong) MainButton *button;
 
 @end
 

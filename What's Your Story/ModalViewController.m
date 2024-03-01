@@ -6,11 +6,6 @@
 
 @implementation ModalViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
 - (id)initWithText:(NSString *)text {
     self = [super init];
     if (self) {
@@ -47,7 +42,7 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    
+
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         self.view.subviews.firstObject.frame = UIScreen.mainScreen.bounds; // This is the backgroundView which should cover the whole screen.
         UIView *popupView = self.view.subviews.lastObject; // Assuming popupView was added last.

@@ -2,7 +2,7 @@
 
 @interface GameViewController : UIViewController
 
-+ (id) gameViewController:(NSArray<NSNumber *> *)stories;
++ (id)gameViewController:(NSArray<NSNumber *> *)stories;
 
 @end
 

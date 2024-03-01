@@ -8,13 +8,13 @@
 
 @interface ViewController () <MainViewControllerDelegate>
 
-@property NSMutableArray<NSNumber *> *categories;
-@property MainButton *button;
-@property MainLabel *label;
-@property UIButton *help;
-@property NSMutableArray<UIButton *> *checkboxes;
-@property NSMutableArray<NSLayoutConstraint *> *constraints;
-@property CollectionViewController *collectionViewController;
+@property (nonatomic, strong) NSMutableArray<NSNumber *> *categories;
+@property (nonatomic, strong) MainButton *button;
+@property (nonatomic, strong) MainLabel *label;
+@property (nonatomic, strong) UIButton *help;
+@property (nonatomic, strong) NSMutableArray<UIButton *> *checkboxes;
+@property (nonatomic, strong) NSMutableArray<NSLayoutConstraint *> *constraints;
+@property (nonatomic, strong) CollectionViewController *collectionViewController;
 
 @end
 
