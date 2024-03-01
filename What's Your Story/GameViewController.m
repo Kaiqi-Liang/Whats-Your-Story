@@ -15,7 +15,7 @@
 
 @implementation GameViewController
 
-+ (id) gameViewController:(NSArray<NSNumber *> *)categories {
++ (id)gameViewController:(NSArray<NSNumber *> *)categories {
     GameViewController *gameViewController = [self new];
     gameViewController.categories = categories;
     gameViewController.stories = [NSMutableArray new];

@@ -16,6 +16,7 @@
 		2B372DB62B7CD4D900D37CA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B372DB52B7CD4D900D37CA2 /* main.m */; };
 		2B92E1BC2B88193C00028E43 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B92E1BB2B88193C00028E43 /* TableViewController.m */; };
 		2B92E1C32B8D4F4700028E43 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B92E1C22B8D4F4700028E43 /* CollectionViewController.m */; };
+		2BA9047C2B91872100E98CE7 /* Animator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9047B2B91872100E98CE7 /* Animator.m */; };
 		2BA9FD552B91750E00E98CE7 /* ModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9FD542B91750E00E98CE7 /* ModalViewController.m */; };
 		2BE6AC502B82F6B700A84C54 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE6AC4F2B82F6B700A84C54 /* GameViewController.m */; };
 		2BE6AC542B841B7D00A84C54 /* MainButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE6AC532B841B7D00A84C54 /* MainButton.m */; };
@@ -40,6 +41,8 @@
 		2B92E1BD2B881A9A00028E43 /* StoryDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoryDataSource.h; sourceTree = "<group>"; };
 		2B92E1C12B8D4F4700028E43 /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
 		2B92E1C22B8D4F4700028E43 /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		2BA9047A2B91872100E98CE7 /* Animator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animator.h; sourceTree = "<group>"; };
+		2BA9047B2B91872100E98CE7 /* Animator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Animator.m; sourceTree = "<group>"; };
 		2BA9FD532B91750E00E98CE7 /* ModalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModalViewController.h; sourceTree = "<group>"; };
 		2BA9FD542B91750E00E98CE7 /* ModalViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModalViewController.m; sourceTree = "<group>"; };
 		2BE6AC4F2B82F6B700A84C54 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
@@ -92,6 +95,8 @@
 				2BE6AC512B82F70100A84C54 /* GameViewController.h */,
 				2B92E1BA2B88193C00028E43 /* TableViewController.h */,
 				2B92E1BB2B88193C00028E43 /* TableViewController.m */,
+				2BA9047A2B91872100E98CE7 /* Animator.h */,
+				2BA9047B2B91872100E98CE7 /* Animator.m */,
 				2B372DA42B7CD4D700D37CA2 /* AppDelegate.m */,
 				2B372DA62B7CD4D700D37CA2 /* SceneDelegate.h */,
 				2B372DA72B7CD4D700D37CA2 /* SceneDelegate.m */,
@@ -178,6 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BA9047C2B91872100E98CE7 /* Animator.m in Sources */,
 				2BE6AC502B82F6B700A84C54 /* GameViewController.m in Sources */,
 				2B372DAB2B7CD4D700D37CA2 /* ViewController.m in Sources */,
 				2BA9FD552B91750E00E98CE7 /* ModalViewController.m in Sources */,

@@ -1,10 +1,12 @@
 #import "TableViewController.h"
 #import "StoryDataSource.h"
 #import "ModalViewController.h"
+#import "Animator.h"
 
 @interface TableViewController ()
 
 @property (nonatomic, copy) NSArray<NSArray<NSString *> *> *stories;
+@property (nonatomic, strong) Animator *transition;
 
 @end
 
@@ -13,6 +15,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.stories = STORIES;
+    self.transition = [Animator animator:0.5];
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:@"Cell"];
     self.view.backgroundColor = UIColor.blackColor;
     [self.navigationController.navigationBar setTranslucent:NO];
@@ -40,16 +43,17 @@
     cell.textLabel.textColor = UIColor.whiteColor;
     cell.backgroundColor = UIColor.blackColor;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)]];
+    [cell addGestureRecognizer: [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(presentModalViewWithText:)]];
     return cell;
 }
 
-- (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer {
+- (void)presentModalViewWithText:(UILongPressGestureRecognizer *)gestureRecognizer {
     CGPoint p = [gestureRecognizer locationInView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
     if (indexPath) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         ModalViewController *modalViewController = [[ModalViewController alloc] initWithText:cell.textLabel.text];
+        modalViewController.transitioningDelegate = self;
         [self presentViewController:modalViewController animated:YES completion:nil];
     }
 }
@@ -61,6 +65,10 @@
     headerLabel.backgroundColor = UIColor.blackColor;
     headerLabel.textAlignment = NSTextAlignmentCenter;
     return headerLabel;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    return self.transition;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
