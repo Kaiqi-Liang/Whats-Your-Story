@@ -5,7 +5,7 @@
 - (nonnull id)initWithText:(nonnull NSString *)text {
     self = [super init];
     if (self) {
-        self.font = [UIFont systemFontOfSize:20];
+        self.font = [UIFont systemFontOfSize:24];
         self.text = text;
         self.textColor = UIColor.whiteColor;
         self.numberOfLines = 0;

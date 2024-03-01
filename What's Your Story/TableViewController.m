@@ -1,5 +1,6 @@
 #import "TableViewController.h"
 #import "StoryDataSource.h"
+#import "ModalViewController.h"
 
 @interface TableViewController ()
 
@@ -39,7 +40,18 @@
     cell.textLabel.textColor = UIColor.whiteColor;
     cell.backgroundColor = UIColor.blackColor;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)]];
     return cell;
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer {
+    CGPoint p = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+    if (indexPath) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        ModalViewController *modalViewController = [[ModalViewController alloc] initWithText:cell.textLabel.text];
+        [self presentViewController:modalViewController animated:YES completion:nil];
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

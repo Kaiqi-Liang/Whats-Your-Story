@@ -73,7 +73,7 @@
     UIButtonConfiguration *configuration = [UIButtonConfiguration plainButtonConfiguration];
     [configuration setAttributedTitle: [[NSMutableAttributedString alloc] initWithString:@"?"
                                                                               attributes:@{
-        NSFontAttributeName: [UIFont systemFontOfSize:18],
+        NSFontAttributeName: [UIFont systemFontOfSize:20],
         NSForegroundColorAttributeName: UIColor.whiteColor,
     }]];
     [self.help setConfiguration:configuration];
