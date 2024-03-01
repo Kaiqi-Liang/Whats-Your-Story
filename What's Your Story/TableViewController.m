@@ -43,18 +43,24 @@
     cell.textLabel.textColor = UIColor.whiteColor;
     cell.backgroundColor = UIColor.blackColor;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell addGestureRecognizer: [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(presentModalViewWithText:)]];
+    UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(presentModalViewWithText:)];
+    longpress.minimumPressDuration = 0.2;
+    [cell addGestureRecognizer: longpress];
     return cell;
 }
 
 - (void)presentModalViewWithText:(UILongPressGestureRecognizer *)gestureRecognizer {
-    CGPoint p = [gestureRecognizer locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
-    if (indexPath) {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        ModalViewController *modalViewController = [[ModalViewController alloc] initWithText:cell.textLabel.text];
-        modalViewController.transitioningDelegate = self;
-        [self presentViewController:modalViewController animated:YES completion:nil];
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        UIImpactFeedbackGenerator *feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleHeavy];
+        [feedbackGenerator prepare];
+        [feedbackGenerator impactOccurred];
+
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[gestureRecognizer locationInView:self.tableView]];
+        if (indexPath) {
+            ModalViewController *modalViewController = [[ModalViewController alloc] initWithText:[self.tableView cellForRowAtIndexPath:indexPath].textLabel.text];
+            modalViewController.transitioningDelegate = self;
+            [self presentViewController:modalViewController animated:YES completion:nil];
+        }
     }
 }
 
