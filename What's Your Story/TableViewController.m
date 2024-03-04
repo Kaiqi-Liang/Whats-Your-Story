@@ -15,7 +15,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.stories = STORIES;
-    self.transition = [Animator animator:0.5];
+    self.transition = [Animator animatorWithDuration:0.5];
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:@"Cell"];
     self.view.backgroundColor = UIColor.blackColor;
     [self.navigationController.navigationBar setTranslucent:NO];
@@ -51,9 +51,8 @@
 
 - (void)presentModalViewWithText:(UILongPressGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        UIImpactFeedbackGenerator *feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleHeavy];
-        [feedbackGenerator prepare];
-        [feedbackGenerator impactOccurred];
+        UINotificationFeedbackGenerator *feedbackGenerator = [UINotificationFeedbackGenerator new];
+        [feedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
 
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[gestureRecognizer locationInView:self.tableView]];
         if (indexPath) {

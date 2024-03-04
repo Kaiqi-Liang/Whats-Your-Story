@@ -3,7 +3,7 @@
 
 @interface Animator : NSObject<UIViewControllerAnimatedTransitioning>
 
-+ (id)animator:(NSTimeInterval)duration;
++ (id)animatorWithDuration:(NSTimeInterval)duration;
 
 @end
 

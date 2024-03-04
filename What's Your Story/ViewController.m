@@ -105,7 +105,7 @@
 
 - (void)startGame {
     if ([self.categories containsObject:@YES]) {
-        [self.navigationController pushViewController:[GameViewController gameViewController:self.categories] animated:YES];
+        [self.navigationController pushViewController:[GameViewController gameViewControllerWithCategories:self.categories] animated:YES];
     } else {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You need to select at least one categories" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}]];

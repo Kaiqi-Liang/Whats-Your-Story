@@ -8,7 +8,7 @@
 
 @implementation Animator
 
-+ (id)animator:(NSTimeInterval)duration {
++ (id)animatorWithDuration:(NSTimeInterval)duration {
     Animator *animator = [self new];
     animator.duration = duration;
     return animator;
