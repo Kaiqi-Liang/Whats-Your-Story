@@ -50,7 +50,10 @@
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.blackColor;
     self.constraints = [NSMutableArray new];
-    self.categories = [NSMutableArray arrayWithCapacity:STORIES.count];
+    self.categories = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"categories"] mutableCopy];
+    if (self.categories == nil) {
+        self.categories = [NSMutableArray arrayWithCapacity:STORIES.count];
+    }
     for (uint8_t i = 0; i < STORIES.count; ++i) {
         [self.categories addObject:@NO];
     }
@@ -97,10 +100,12 @@
 
 - (void)didSelectItemAtIndex:(NSInteger)index {
     self.categories[index] = @YES;
+    [[NSUserDefaults standardUserDefaults] setObject:self.categories forKey:@"categories"];
 }
 
 - (void)didDeselectItemAtIndex:(NSInteger)index {
     self.categories[index] = @NO;
+    [[NSUserDefaults standardUserDefaults] setObject:self.categories forKey:@"categories"];
 }
 
 - (void)startGame {

@@ -3,16 +3,12 @@
 
 @interface CollectionViewController ()<UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *cellWidths;
-@property (nonatomic, assign) CGFloat cellHeight;
-
 @end
 
 @implementation CollectionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.cellWidths = [[NSMutableArray alloc] initWithCapacity: STORIES.count];
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
     layout.itemSize = CGSizeMake(200, 60);
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
@@ -22,6 +18,12 @@
     self.collectionView.delegate = self;
     self.collectionView.allowsMultipleSelection = YES;
     [self.view addSubview:self.collectionView];
+    NSArray *categories = [[NSUserDefaults standardUserDefaults] arrayForKey:@"categories"];
+    for (int i = 0; i < categories.count; ++i) {
+        if ([categories[i] isEqual: @YES]) {
+            [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        }
+    }
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -49,8 +51,6 @@
         [label.centerXAnchor constraintEqualToAnchor:cell.centerXAnchor],
         [label.centerYAnchor constraintEqualToAnchor:cell.centerYAnchor],
     ]];
-    self.cellHeight = label.frame.size.height;
-    self.cellWidths[indexPath.row] = @(label.frame.size.width);
 
     UIView* backgroundView = [[UIView alloc] initWithFrame:cell.bounds];
     backgroundView.backgroundColor = UIColor.blackColor;
