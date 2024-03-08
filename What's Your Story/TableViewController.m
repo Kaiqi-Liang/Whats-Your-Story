@@ -26,6 +26,7 @@
     self.searchController.searchBar.barTintColor = UIColor.blackColor;
     self.searchController.searchBar.searchTextField.textColor = UIColor.whiteColor;
     self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.filteredStories = [NSMutableArray arrayWithCapacity:STORIES.count];
     [self.filteredStories addObject:[NSMutableArray array]];
     for (NSUInteger i = 0; i < STORIES.count; i++) {
@@ -39,29 +40,19 @@
     [self.navigationController.navigationBar setTranslucent:YES];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (self.searchController.active) {
-        self.searchController.active = NO;
-    }
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return STORIES.count;
 }
 
-- (BOOL) displayFiltered {
-    return self.searchController.active && self.searchController.searchBar.text.length > 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self displayFiltered] ? [self.filteredStories objectAtIndex:section].count : [STORIES objectAtIndex:section].count;
+    return self.searchController.searchBar.text.length > 0 ? [self.filteredStories objectAtIndex:section].count : [STORIES objectAtIndex:section].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.textLabel.text = [self displayFiltered] ? self.filteredStories[indexPath.section][indexPath.row] : STORIES[indexPath.section][indexPath.row];
+    cell.textLabel.text = self.searchController.searchBar.text.length > 0 ? self.filteredStories[indexPath.section][indexPath.row] : STORIES[indexPath.section][indexPath.row];
     cell.textLabel.textColor = UIColor.whiteColor;
     cell.backgroundColor = UIColor.blackColor;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
