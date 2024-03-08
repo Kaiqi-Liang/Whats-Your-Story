@@ -11,7 +11,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-    layout.itemSize = CGSizeMake(200, 60);
+    layout.itemSize = CGSizeMake(200, 70);
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.collectionView.backgroundColor = UIColor.blackColor;
     [self.collectionView registerClass:UICollectionViewCell.class forCellWithReuseIdentifier:@"Cell"];

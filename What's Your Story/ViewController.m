@@ -20,11 +20,22 @@
 
 @implementation ViewController
 
+- (CGFloat)collectionHeightThatWillFit:(NSInteger)cells {
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionViewController.collectionView.collectionViewLayout;
+    return cells * layout.itemSize.height + (cells - 1) * layout.minimumInteritemSpacing;
+}
+
 - (void)setupConstraintsWithSize:(CGSize)size {
     [NSLayoutConstraint deactivateConstraints:self.constraints];
     [self.constraints removeAllObjects];
     CGFloat verticalMargin = size.height * 0.05;
     CGFloat horizontalMargin = size.width * 0.15;
+    CGFloat height = [self collectionHeightThatWillFit:size.height < 700 ? 4 : 6];
+    CGFloat width = 200;
+    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+        height = [self collectionHeightThatWillFit:size.height > 450 ? 3 : 2];
+        width = 500;
+    }
     [self.constraints addObjectsFromArray:@[
         [self.label.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         [self.label.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:(size.height * 0.01)],
@@ -37,10 +48,9 @@
         [self.help.widthAnchor constraintEqualToAnchor:self.button.heightAnchor],
         [self.help.heightAnchor constraintEqualToAnchor:self.button.heightAnchor],
         [self.collectionViewController.view.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [self.collectionViewController.view.topAnchor constraintEqualToAnchor:self.label.bottomAnchor constant:verticalMargin],
-        [self.collectionViewController.view.bottomAnchor constraintEqualToAnchor:self.button.topAnchor constant:-verticalMargin],
-        [self.collectionViewController.view.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:horizontalMargin],
-        [self.collectionViewController.view.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.view.trailingAnchor constant:-horizontalMargin],
+        [self.collectionViewController.view.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+        [self.collectionViewController.view.widthAnchor constraintEqualToConstant:width],
+        [self.collectionViewController.view.heightAnchor constraintEqualToConstant:height],
     ]];
 
     [NSLayoutConstraint activateConstraints:self.constraints];

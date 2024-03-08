@@ -40,28 +40,36 @@
     [self.button addTarget:self action:@selector(nextStory) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview: self.button];
 
+    MainLabel *label = [[MainLabel alloc] initWithText:@"TELL A STORY ABOUT"];
+    [self.view addSubview:label];
+
+    UIView *storyContainer = [UIView new];
+    storyContainer.backgroundColor = Color.yellowColor;
+    storyContainer.layer.cornerRadius = 10;
+    storyContainer.layer.masksToBounds = YES;
+    storyContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:storyContainer];
+
     self.story = [UILabel new];
     self.story.text = self.stories[self.index++];
-    self.story.backgroundColor = Color.yellowColor;
     self.story.textColor = UIColor.blackColor;
     self.story.numberOfLines = 0;
     self.story.lineBreakMode = NSLineBreakByWordWrapping;
     self.story.textAlignment = NSTextAlignmentCenter;
-    self.story.layer.cornerRadius = 10;
-    self.story.layer.masksToBounds = YES;
-    [self.view addSubview:self.story];
     self.story.translatesAutoresizingMaskIntoConstraints = NO;
+    [storyContainer addSubview:self.story];
 
-    MainLabel *label = [[MainLabel alloc] initWithText:@"TELL A STORY ABOUT"];
-    [self.view addSubview:label];
-
+    CGFloat padding = 20;
     [NSLayoutConstraint activateConstraints:@[
         [label.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         [label.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-75],
-        [self.story.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [self.story.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:25],
-        [self.story.widthAnchor constraintEqualToConstant:300],
-        [self.story.heightAnchor constraintEqualToConstant:100],
+        [storyContainer.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [storyContainer.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:25],
+        [storyContainer.widthAnchor constraintEqualToConstant:300],
+        [self.story.topAnchor constraintEqualToAnchor:storyContainer.topAnchor constant:padding],
+        [self.story.bottomAnchor constraintEqualToAnchor:storyContainer.bottomAnchor constant:-padding],
+        [self.story.leadingAnchor constraintEqualToAnchor:storyContainer.leadingAnchor constant:padding],
+        [self.story.trailingAnchor constraintEqualToAnchor:storyContainer.trailingAnchor constant:-padding],
         [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         [self.button.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-(self.view.bounds.size.height * 0.05)],
     ]];
