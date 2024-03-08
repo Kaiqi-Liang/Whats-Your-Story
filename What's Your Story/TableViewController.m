@@ -5,8 +5,9 @@
 
 @interface TableViewController ()
 
-@property (nonatomic, copy) NSArray<NSArray<NSString *> *> *stories;
 @property (nonatomic, strong) Animator *transition;
+@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) NSMutableArray<NSMutableArray <NSString *> *> *filteredStories;
 
 @end
 
@@ -14,12 +15,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.stories = STORIES;
     self.transition = [Animator animatorWithDuration:0.5];
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:@"Cell"];
     self.view.backgroundColor = UIColor.blackColor;
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+
+    self.searchController = [[UISearchController alloc] init];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.barTintColor = UIColor.blackColor;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.filteredStories = [NSMutableArray arrayWithCapacity:STORIES.count];
+    [self.filteredStories addObject:[NSMutableArray array]];
+    for (NSUInteger i = 0; i < STORIES.count; i++) {
+        [self.filteredStories addObject:[NSMutableArray array]];
+    }
+    self.definesPresentationContext = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -27,22 +38,36 @@
     [self.navigationController.navigationBar setTranslucent:YES];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (self.searchController.active) {
+        self.searchController.active = NO;
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.stories.count;
+    return STORIES.count;
+}
+
+- (BOOL) displayFiltered {
+    return self.searchController.active && self.searchController.searchBar.text.length > 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.stories objectAtIndex:section].count;
+    return [self displayFiltered] ? [self.filteredStories objectAtIndex:section].count : [STORIES objectAtIndex:section].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.textLabel.text = self.stories[indexPath.section][indexPath.row];
+    cell.textLabel.text = [self displayFiltered] ? self.filteredStories[indexPath.section][indexPath.row] : STORIES[indexPath.section][indexPath.row];
     cell.textLabel.textColor = UIColor.whiteColor;
     cell.backgroundColor = UIColor.blackColor;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    while (cell.gestureRecognizers.count) {
+        [cell removeGestureRecognizer:[cell.gestureRecognizers objectAtIndex:0]];
+    }
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(presentModalViewWithText:)];
     longpress.minimumPressDuration = 0.2;
     [cell addGestureRecognizer: longpress];
@@ -65,7 +90,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *headerLabel = [UILabel new];
-    headerLabel.text = [self titleForSection:section];
+    headerLabel.text = [NSString stringWithFormat:@"Category %ld", section + 1];
     headerLabel.textColor = [UIColor whiteColor];
     headerLabel.backgroundColor = UIColor.blackColor;
     headerLabel.textAlignment = NSTextAlignmentCenter;
@@ -80,12 +105,21 @@
     return 40;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self titleForSection:section];
-}
+#pragma mark - Search
 
-- (NSString *)titleForSection:(NSInteger)section {
-    return [NSString stringWithFormat:@"Category %ld", section + 1];
+- (void)updateSearchResultsForSearchController:(nonnull UISearchController *)searchController {
+    NSString *searchText = searchController.searchBar.text;
+    if (searchText.length > 0) {
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString *evaluatedObject, NSDictionary *bindings) {
+            return [evaluatedObject localizedCaseInsensitiveContainsString:searchText];
+        }];
+
+        for (NSUInteger i = 0; i < STORIES.count; i++) {
+            [self.filteredStories[i] removeAllObjects];
+            [self.filteredStories[i] addObjectsFromArray:[STORIES[i] filteredArrayUsingPredicate:predicate]];
+        }
+    }
+    [self.tableView reloadData];
 }
 
 @end
