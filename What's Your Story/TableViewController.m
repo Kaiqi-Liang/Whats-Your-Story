@@ -24,6 +24,7 @@
     self.searchController = [[UISearchController alloc] init];
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.barTintColor = UIColor.blackColor;
+    self.searchController.searchBar.searchTextField.textColor = UIColor.whiteColor;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.filteredStories = [NSMutableArray arrayWithCapacity:STORIES.count];
     [self.filteredStories addObject:[NSMutableArray array]];

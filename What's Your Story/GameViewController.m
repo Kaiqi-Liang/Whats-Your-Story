@@ -2,6 +2,7 @@
 #import "StoryDataSource.h"
 #import "MainButton.h"
 #import "MainLabel.h"
+#import "Colour.h"
 
 @interface GameViewController ()
 
@@ -41,24 +42,26 @@
 
     self.story = [UILabel new];
     self.story.text = self.stories[self.index++];
-    self.story.textColor = UIColor.whiteColor;
+    self.story.backgroundColor = Color.yellowColor;
+    self.story.textColor = UIColor.blackColor;
     self.story.numberOfLines = 0;
     self.story.lineBreakMode = NSLineBreakByWordWrapping;
     self.story.textAlignment = NSTextAlignmentCenter;
+    self.story.layer.cornerRadius = 10;
+    self.story.layer.masksToBounds = YES;
     [self.view addSubview:self.story];
     self.story.translatesAutoresizingMaskIntoConstraints = NO;
 
     MainLabel *label = [[MainLabel alloc] initWithText:@"TELL A STORY ABOUT"];
     [self.view addSubview:label];
 
-    CGFloat sideMargin = self.view.bounds.size.width * 0.15;
     [NSLayoutConstraint activateConstraints:@[
         [label.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [label.centerYAnchor constraintEqualToAnchor:self.story.centerYAnchor constant:-self.view.frame.size.height * 0.1],
+        [label.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-75],
         [self.story.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [self.story.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
-        [self.story.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:sideMargin],
-        [self.story.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.view.trailingAnchor constant:-sideMargin],
+        [self.story.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:25],
+        [self.story.widthAnchor constraintEqualToConstant:300],
+        [self.story.heightAnchor constraintEqualToConstant:100],
         [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         [self.button.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-(self.view.bounds.size.height * 0.05)],
     ]];

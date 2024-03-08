@@ -1,5 +1,6 @@
 #import "CollectionViewController.h"
 #import "StoryDataSource.h"
+#import "Colour.h"
 
 @interface CollectionViewController ()<UICollectionViewDelegateFlowLayout>
 
@@ -56,8 +57,10 @@
     backgroundView.backgroundColor = UIColor.blackColor;
     cell.backgroundView = backgroundView;
     UIView* selectedBGView = [[UIView alloc] initWithFrame:cell.bounds];
-    selectedBGView.backgroundColor = UIColor.tintColor;
+    selectedBGView.backgroundColor = Color.blueColor;
     cell.selectedBackgroundView = selectedBGView;
+    cell.layer.cornerRadius = 10;
+    cell.layer.masksToBounds = YES;
     return cell;
 }
 
