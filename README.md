@@ -1,1 +1,1 @@
-https://github.com/Kaiqi-Liang/Whats-Your-Story/assets/48940131/6620735a-372f-42c2-a678-7241e8403958
+https://github.com/Kaiqi-Liang/Whats-Your-Story/assets/48940131/69782b2d-6651-49f5-82e2-452c0e5f3a19
