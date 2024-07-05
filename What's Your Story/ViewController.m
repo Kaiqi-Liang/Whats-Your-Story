@@ -70,10 +70,14 @@
 
     self.label = [[MainLabel alloc] initWithText:@"Pick one or more categories of stories to tell"];
     [self.view addSubview:self.label];
-
-    self.button = [[MainButton alloc] initWithTitle:@"Start"];
-    [self.button addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.button];
+    CGPoint center = self.label.center;
+    center.y -= self.view.bounds.size.height;
+    self.label.center = center;
+    [UIView animateWithDuration:1 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        CGPoint center = self.label.center;
+        center.y += self.view.bounds.size.height;
+        self.label.center = center;
+    } completion:nil];
 
     self.collectionViewController = [CollectionViewController new];
     self.collectionViewController.delegate = self;
@@ -81,6 +85,10 @@
     [self.view addSubview:self.collectionViewController.view];
     [self.collectionViewController didMoveToParentViewController:self];
     self.collectionViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+
+    self.button = [[MainButton alloc] initWithTitle:@"Start"];
+    [self.button addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.button];
 
     self.help = [UIButton new];
     UIButtonConfiguration *configuration = [UIButtonConfiguration plainButtonConfiguration];
@@ -98,7 +106,7 @@
     [self setupConstraintsWithSize:self.view.bounds.size];
 }
 
-- (void )viewDidLayoutSubviews {
+- (void)viewDidLayoutSubviews {
     self.help.layer.cornerRadius = self.help.frame.size.width / 2;
     self.help.clipsToBounds = YES;
 }
@@ -116,6 +124,10 @@
 - (void)didDeselectItemAtIndex:(NSInteger)index {
     self.categories[index] = @NO;
     [[NSUserDefaults standardUserDefaults] setObject:self.categories forKey:@"categories"];
+}
+
+- (void)buttonClicked {
+    [self performSelector:@selector(startGame) withObject:nil afterDelay:0.3];
 }
 
 - (void)startGame {

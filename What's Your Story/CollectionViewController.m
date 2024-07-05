@@ -4,6 +4,8 @@
 
 @interface CollectionViewController ()<UICollectionViewDelegateFlowLayout>
 
+@property (nonatomic, assign) BOOL hasAnimated;
+
 @end
 
 @implementation CollectionViewController
@@ -23,6 +25,19 @@
     for (int i = 0; i < categories.count; ++i) {
         if ([categories[i] isEqual: @YES]) {
             [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        }
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (!self.hasAnimated) {
+        self.hasAnimated = YES;
+        for (uint8_t i = 0; i < self.collectionView.visibleCells.count; ++i) {
+            UICollectionViewCell *cell = self.collectionView.visibleCells[i];
+            cell.alpha = 0;
+            [UIView animateWithDuration:0.2 delay:0.5 + 0.2 * i options:0 animations:^{
+                cell.alpha = 1;
+            } completion:nil];
         }
     }
 }
